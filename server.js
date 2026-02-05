@@ -25,6 +25,9 @@ app.post('/send-notification', async (req, res) => {
     const userEmail = process.env.NOTIFICATION_EMAIL;
     const { visitorName, timestamp } = req.body;
     
+    console.log('📧 Email request received from:', visitorName);
+    console.log('📧 Sending to:', userEmail);
+    
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: userEmail,
@@ -41,6 +44,7 @@ app.post('/send-notification', async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
+    console.log('✅ Email sent successfully to:', userEmail);
     res.json({ success: true, message: 'Email sent successfully!' });
   } catch (error) {
     console.error('Error sending email:', error);
