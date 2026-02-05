@@ -23,18 +23,19 @@ const transporter = nodemailer.createTransport({
 app.post('/send-notification', async (req, res) => {
   try {
     const userEmail = process.env.NOTIFICATION_EMAIL;
+    const { visitorName, timestamp } = req.body;
     
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: userEmail,
-      subject: '💕 She Said YES! 💕',
+      subject: `💕 ${visitorName} Said YES! 💕`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white; text-align: center;">
           <h1 style="font-size: 2.5rem; margin: 20px 0;">🎉 CONGRATULATIONS! 🎉</h1>
-          <p style="font-size: 1.2rem; margin: 20px 0;">She clicked YES!</p>
+          <p style="font-size: 1.5rem; margin: 20px 0;"><strong>${visitorName}</strong> clicked YES!</p>
           <p style="font-size: 1rem; margin: 20px 0;">Your Valentine's Day proposal was successful! 💕</p>
           <p style="font-size: 2rem; margin: 30px 0;">❤️💖💝</p>
-          <p style="font-size: 0.9rem; color: #f0f0f0;">Sent at: ${new Date().toLocaleString()}</p>
+          <p style="font-size: 0.9rem; color: #f0f0f0;">Responded at: ${new Date(timestamp).toLocaleString()}</p>
         </div>
       `
     };

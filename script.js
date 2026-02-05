@@ -40,12 +40,15 @@ function handleYes() {
 }
 
 function sendNotification() {
+    const visitorName = document.getElementById('visitorName').value || 'Anonymous';
+    
     fetch('/send-notification', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            visitorName: visitorName,
             timestamp: new Date().toISOString()
         })
     })
