@@ -34,6 +34,28 @@ function handleYes() {
     // Disable buttons
     document.querySelector('.yes-btn').disabled = true;
     document.getElementById('noBtn').disabled = true;
+    
+    // Send notification email to your email
+    sendNotification();
+}
+
+function sendNotification() {
+    fetch('/send-notification', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            timestamp: new Date().toISOString()
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Notification sent:', data);
+    })
+    .catch(error => {
+        console.error('Error sending notification:', error);
+    });
 }
 
 function handleNo() {
